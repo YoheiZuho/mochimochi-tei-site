@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>もちもち亭 — Webと哲学の融合</title>
+  <meta name="description" content="斧渕勇輝の個人サイト。インフラ・バックエンドエンジニアとしてFediverse関連サービスを開発・運営しています。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #1a2f5b;
+      --blue: #3d6d9e;
+      --light-blue: #e8f0f8;
+      --bg: #faf8f4;
+      --text: #2d2926;
+      --text-light: #6b6560;
+      --accent: #c45a3d;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+    }
+
+    .hero-logo {
+      max-width: 640px;
+      width: 90%;
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.1rem;
+      color: var(--text-light);
+      margin-bottom: 2rem;
+    }
+
+    .hero-nav {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .hero-nav a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 400;
+      font-size: 0.95rem;
+      padding: 0.4rem 0;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    .hero-nav a:hover {
+      border-bottom-color: var(--blue);
+    }
+
+    .hero-social {
+      margin-top: 1.5rem;
+    }
+
+    .hero-social a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .section-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.8rem;
+      color: var(--navy);
+      margin-bottom: 2rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 2px solid var(--navy);
+    }
+
+    /* ===== ABOUT ===== */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .about-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .about-table th,
+    .about-table td {
+      padding: 0.8rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e0d8;
+    }
+
+    .about-table th {
+      width: 120px;
+      color: var(--text-light);
+      font-weight: 400;
+      font-size: 0.9rem;
+    }
+
+    .about-philosophy {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.05rem;
+      color: var(--navy);
+      padding: 1.5rem;
+      background: var(--light-blue);
+      border-left: 4px solid var(--navy);
+      border-radius: 0 8px 8px 0;
+      margin-top: 1rem;
+    }
+
+    /* ===== SERVICES ===== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    .service-card h3 {
+      font-size: 1.1rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 1rem;
+    }
+
+    .service-card a {
+      display: inline-block;
+      font-size: 0.85rem;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .service-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== SKILLS ===== */
+    .skills-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .skills-group h3 {
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .skill-list {
+      list-style: none;
+    }
+
+    .skill-list li {
+      padding: 0.4rem 0;
+      font-size: 0.95rem;
+      border-bottom: 1px dashed #e5e0d8;
+    }
+
+    .skill-list li::before {
+      content: "▸";
+      color: var(--blue);
+      margin-right: 0.5rem;
+    }
+
+    /* ===== WORKS ===== */
+    .works-block {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid #e5e0d8;
+    }
+
+    .works-block:last-child {
+      border-bottom: none;
+    }
+
+    .works-block h3 {
+      font-size: 1.15rem;
+      color: var(--navy);
+      margin-bottom: 0.8rem;
+    }
+
+    .works-block p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+    }
+
+    .works-block ul {
+      list-style: none;
+      margin-top: 0.5rem;
+    }
+
+    .works-block ul li {
+      padding: 0.3rem 0;
+      font-size: 0.95rem;
+    }
+
+    .works-block ul li::before {
+      content: "—";
+      margin-right: 0.5rem;
+      color: var(--blue);
+    }
+
+    /* ===== CONTACT ===== */
+    .contact-text {
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--text-light);
+    }
+
+    .google-form-wrapper {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      border-top: 1px solid #e5e0d8;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .skills-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-logo {
+        width: 95%;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 3rem 1.5rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <img src="img/logo.png" alt="もちもち亭 ロゴ" class="hero-logo">
+    <p class="hero-subtitle">斧渕勇輝 — インフラ・バックエンドエンジニア</p>
+    <nav class="hero-nav">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#skills">Skills</a>
+      <a href="#works">Works</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="hero-social">
+      <a href="https://mstdn.y-zu.org/@yohei_zuho" target="_blank" rel="me">@yohei_zuho@mstdn.y-zu.org</a>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about" class="section">
+    <h2 class="section-title">About</h2>
+    <div class="about-content">
+      <table class="about-table">
+        <tr>
+          <th>名前</th>
+          <td>斧渕 勇輝（おのぶち ゆうき）</td>
+        </tr>
+        <tr>
+          <th>屋号</th>
+          <td>もちもち亭</td>
+        </tr>
+        <tr>
+          <th>居住地</th>
+          <td>兵庫県姫路市</td>
+        </tr>
+        <tr>
+          <th>本業</th>
+          <td>株式会社EPOCH-NET — インフラ・バックエンドエンジニア（テックリード）</td>
+        </tr>
+        <tr>
+          <th>副業</th>
+          <td>個人事業主としてITベンチャー案件参画（Python中心のバックエンド・インフラ業務）</td>
+        </tr>
+        <tr>
+          <th>学歴</th>
+          <td>創価大学文学部人間学科（哲学・歴史学メジャー）卒業</td>
+        </tr>
+        <tr>
+          <th>コミュニティ</th>
+          <td>FediLUG（Fediverse Linux Users Group）設立・運営</td>
+        </tr>
+      </table>
+      <div class="about-philosophy">
+        哲学を学んだ者が、システムをどう考えるか。<br>
+        技術と人間性を掛け合わせた開発を追求しています。
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section id="services" class="section">
+    <h2 class="section-title">Services</h2>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <h3>FediQB</h3>
+        <p>Mastodon・Misskeyのアカウントで使える匿名質問箱サービス。Mastodon/Misskeyでのログイン、投稿機能、DM通知に対応しています。</p>
+        <a href="https://fediqb.y-zu.org/" target="_blank" rel="noopener">fediqb.y-zu.org →</a>
+      </div>
+
+      <div class="service-card">
+        <h3>Fediverseプロフ帳</h3>
+        <p>Fediverseアカウントでログインしてプロフィールカードを作成できるサービス。複数のテーマシートに対応しています。</p>
+        <a href="https://purofu.y-zu.org/" target="_blank" rel="noopener">purofu.y-zu.org →</a>
+      </div>
+
+      <div class="service-card">
+        <h3>mstdn.y-zu.org</h3>
+        <p>斧渕が運営するMastodonインスタンス「Yづドン」。2017年より運用中。</p>
+        <a href="https://mstdn.y-zu.org/" target="_blank" rel="noopener">mstdn.y-zu.org →</a>
+      </div>
+
+      <div class="service-card">
+        <h3>Philosophy.Cafe</h3>
+        <p>哲学的対話のためのオンラインプラットフォーム。カフェスタイルでの哲学的な話題をオンラインで楽しめます。</p>
+        <a href="https://philosophy.cafe/" target="_blank" rel="noopener">philosophy.cafe →</a>
+      </div>
+
+      <div class="service-card">
+        <h3>Pixelfed.Tokyo</h3>
+        <p>東京にサーバーを置くPixefedサーバー。自由でオープンなイメージシェアの場を提供しています。</p>
+        <a href="https://pixelfed.tokyo/" target="_blank" rel="noopener">pixelfed.tokyo →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== SKILLS ===== -->
+  <section id="skills" class="section">
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-container">
+
+      <div class="skills-group">
+        <h3>プログラミング言語</h3>
+        <ul class="skill-list">
+          <li>Go / Gin</li>
+          <li>PHP</li>
+          <li>Python</li>
+        </ul>
+      </div>
+
+      <div class="skills-group">
+        <h3>インフラ基盤</h3>
+        <ul class="skill-list">
+          <li>Proxmox</li>
+          <li>iDRAC</li>
+          <li>Nginx</li>
+          <li>Traefik</li>
+          <li>k3s</li>
+          <li>Ubuntu / openSUSE / Debian / Fedora</li>
+        </ul>
+      </div>
+
+      <div class="skills-group">
+        <h3>CI / CD</h3>
+        <ul class="skill-list">
+          <li>GitHub Actions</li>
+          <li>Gitea Actions</li>
+          <li>GitLab CI/CD</li>
+        </ul>
+      </div>
+
+      <div class="skills-group">
+        <h3>設計・監視</h3>
+        <ul class="skill-list">
+          <li>Grafana</li>
+          <li>Prometheus</li>
+          <li>IPMI</li>
+          <li>Cacti</li>
+        </ul>
+      </div>
+
+      <div class="skills-group">
+        <h3>コンテナ</h3>
+        <ul class="skill-list">
+          <li>Docker / Docker Compose</li>
+        </ul>
+      </div>
+
+      <div class="skills-group">
+        <h3>ローカルLLM</h3>
+        <ul class="skill-list">
+          <li>llama.cpp</li>
+          <li>Ollama</li>
+          <li>Open WebUI</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== WORKS ===== -->
+  <section id="works" class="section">
+    <h2 class="section-title">Works</h2>
+
+    <div class="works-block">
+      <h3>株式会社EPOCH-NET（テックリード）</h3>
+      <p>医療・教育・学術系団体向けシステムの設計・開発・運用に従事。</p>
+      <ul>
+        <li>チームの技術指導とアーキテクチャ決定</li>
+        <li>既存システムの運用・保守・不具合対応</li>
+        <li>システム設計と新規開発</li>
+      </ul>
+    </div>
+
+    <div class="works-block">
+      <h3>副業（個人事業主）</h3>
+      <p>ITベンチャー企業の案件に個人事業主として参画し、Pythonを中心としたバックエンド・インフラ業務を担当。</p>
+      <ul>
+        <li>Django 開発案件</li>
+        <li>バックエンド設計・API 開発</li>
+        <li>インフラ構築・CI/CD 環境構築</li>
+      </ul>
+    </div>
+
+    <div class="works-block">
+      <h3>個人開発</h3>
+      <ul>
+        <li><strong>FediQB</strong> — Fediverse向け匿名質問箱の開発・運営</li>
+        <li><strong>Fediverseプロフ帳</strong> — プロフィールカード作成サービスの開発・運営</li>
+        <li><strong>mstdn.y-zu.org</strong> — Mastodonインスタンスの運用（2017年〜）</li>
+        <li><strong>Pixelfed.Tokyo</strong> — 写真共有型分散SNSサーバーの運用</li>
+        <li><strong>Philosophy.Cafe</strong> — 哲学的対話プラットフォームの開発</li>
+        <li><strong>FediLUG</strong> — 分散型SNSユーザー向け技術コミュニティの設立・運営</li>
+      </ul>
+    </div>
+
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="section">
+    <h2 class="section-title">Contact</h2>
+    <p class="contact-text">
+      業務のご相談・お問い合わせはこちらからどうぞ。<br>
+      Python・インフラ・Fediverseに関するご相談であればなんでもお聞かせください。
+    </p>
+    <div class="google-form-wrapper">
+      <!-- ↓ ここにGoogle Formの埋め込みコードを貼り付けてください -->
+      <iframe src="https://docs.google.com/forms/d/e/あなたのフォームID/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    &copy; もちもち亭 斧渕勇輝
+  </footer>
+
+</body>
+</html>
